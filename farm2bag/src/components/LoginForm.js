@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // ✅ Import Link
+import { Link, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import "./LoginForm.css"; // ✅ Import CSS file
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("farmer"); // ✅ Default role to farmer
   const [rememberMe, setRememberMe] = useState(false); 
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // ✅ Initialize navigation
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,8 +23,15 @@ function LoginForm({ onLogin }) {
       return;
     }
 
-    onLogin({ email, password, rememberMe });
+    onLogin({ email, password, role, rememberMe });
     setError("");
+
+    // ✅ Redirect based on role
+    if (role === "farmer") {
+      navigate("/farmer-dashboard"); // ✅ Navigate to the farmer's dashboard
+    } else {
+      navigate("/buyer-dashboard"); // ✅ Navigate to buyer's page
+    }
   };
 
   return (
@@ -43,6 +52,11 @@ function LoginForm({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="farmer">Farmer</option>
+          <option value="buyer">Buyer</option>
+        </select>
+
         <label className="remember-me">
           <input
             type="checkbox"

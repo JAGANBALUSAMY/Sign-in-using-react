@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import "./App.css"; // ✅ Import CSS file
+import FarmerDashboard from "./components/farmer-dashboard";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/signup" element={<SignupForm onSignup={handleSignup} />} />
+          <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
         </Routes>
 
         {user && (
